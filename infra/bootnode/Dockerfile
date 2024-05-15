@@ -16,13 +16,13 @@ RUN adduser \
 WORKDIR /log-directory
 
 # Set permissions for /log-directory to allow read/write access for any user
-RUN chown app:app /log-directory
+RUN chown 10014:10014 /log-directory
 
 # Set permissions for /app to allow read/write access for any user
 RUN chmod -R 776 /log-directory
 
 # Use the above created unprivileged user
-USER app
+USER 10014
 
 # Expose the required ports
 EXPOSE 30310 30311
