@@ -10,19 +10,19 @@ RUN adduser \
     --gecos "" \
     --uid 10014 \
     --gid 10014 \
-    "choreo"
+    "app"
 
 # Set the working directory
 WORKDIR /log-directory
 
 # Set permissions for /log-directory to allow read/write access for any user
-RUN chown choreo:choreo /log-directory
+RUN chown app:app /log-directory
 
 # Set permissions for /app to allow read/write access for any user
 RUN chmod -R 776 /log-directory
 
 # Use the above created unprivileged user
-USER choreo
+USER app
 
 # Expose the required ports
 EXPOSE 30310 30311
