@@ -14,7 +14,7 @@ WORKDIR /log-directory
 RUN setfacl -R -m o::rwx /log-directory
 
 # Use the above created unprivileged user
-USER choreo
+USER 10001
 
 # Expose the required ports
 EXPOSE 30310 30311
