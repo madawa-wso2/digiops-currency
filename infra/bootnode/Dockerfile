@@ -11,7 +11,8 @@ RUN addgroup -S choreo && adduser -D -u 10001 -G choreo choreo
 WORKDIR /log-directory
 
 # Set permissions for /log-directory to allow read/write access for any user
-RUN setfacl -R -m o::rwx /log-directory
+RUN chown -R 10001:choreo /log-directory && \
+    setfacl -R -d -m u:10001:rwx,g::rwx,o::rwx /log-directory
 
 # Use the above created unprivileged user
 USER 10001
