@@ -1,7 +1,7 @@
 FROM ethereum/client-go:alltools-v1.13.13
 
 # Install required packages
-RUN apk add --no-cache curl jq
+RUN apk add --no-cache curl jq acl
 
 # Create a user with a known UID/GID within range 10000-20000.
 # This is required by Choreo to run the container as a non-root user.
@@ -9,19 +9,17 @@ RUN adduser \
     --disabled-password \
     --gecos "" \
     --uid 10014 \
-    "app"
-
-# Use the above created unprivileged user
-USER 10014
+    --gid 10014 \
+    "choreo"
 
 # Set the working directory
 WORKDIR /log-directory
 
 # Set permissions for /log-directory to allow read/write access for any user
-RUN chown 10014: /log-directory
+RUN setfacl -R -m o::rwx /log-directory
 
-# Set permissions for /app to allow read/write access for any user
-RUN chmod -R 776 /log-directory
+# Use the above created unprivileged user
+USER choreo
 
 # Expose the required ports
 EXPOSE 30310 30311
